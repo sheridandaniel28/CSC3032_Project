@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TinyLearners Buddy - Math Adventure</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-image: url("https://img.freepik.com/premium-photo/gradient-abstract-background-smooth-soft-warm-bright-multicolor-gradient-app-web-design-web-pages-banners-greeting-cards-vector-illustration-design_744423-24817.jpg?semt=ais_hybrid&w=740&q=80");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        .progress-face {
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .answer-btn {
+            transition: all 0.2s ease;
+        }
+        .answer-btn:hover {
+            transform: scale(1.05);
+        }
+        .answer-btn.correct {
+            background-color: #10B981 !important;
+            color: white !important;
+        }
+        .answer-btn.wrong {
+            background-color: #EF4444 !important;
+            color: white !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4">
+    <div class="absolute top-4 right-4">
+        <a href="/learning.html" class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-4 rounded-full shadow-md transform hover:scale-105 transition duration-200 flex items-center">
+            <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>
+            Back
+        </a>
+    </div>
+
+    <div id="difficulty-screen" class="w-full max-w-md text-center mt-8">
+        <h1 class="text-4xl font-bold text-gray-800 mb-8">Math Adventure</h1>
+        <img src="https://img.freepik.com/premium-vector/cute-little-boy-solve-math-problem-cartoon-vector-icon-illustration_138676-2168.jpg" alt="Math Buddy" class="w-48 h-48 mx-auto mb-8">
+        
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Choose Your Level</h2>
+            
+            <div class="space-y-4">
+                <button data-difficulty="easy" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl shadow-md transform hover:scale-105 transition duration-200">
+                    Easy (Numbers 1-10)
+                </button>
+                <button data-difficulty="medium" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-4 px-6 rounded-xl shadow-md transform hover:scale-105 transition duration-200">
+                    Medium (Numbers 1-20)
+                </button>
+                <button data-difficulty="hard" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-4 px-6 rounded-xl shadow-md transform hover:scale-105 transition duration-200">
+                    Hard (Numbers 1-50)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-screen" class="w-full max-w-3xl hidden">
+        <div class="flex flex-col md:flex-row">
+            <!-- Game Area -->
+            <div class="flex-1 bg-white rounded-xl shadow-lg p-6 mb-6 md:mb-0 md:mr-6">
+                <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Math Challenge</h1>
+                
+                <div class="text-center mb-8">
+                    <div class="text-6xl font-bold text-blue-600 mb-4" id="math-problem">3 + 5</div>
+                    <div class="text-xl text-gray-600" id="round-counter">Round 1 of 10</div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <button class="answer-btn bg-blue-100 hover:bg-blue-200 text-blue-800 font-bold py-4 px-6 rounded-lg shadow-sm" data-answer="8">8</button>
+                    <button class="answer-btn bg-blue-100 hover:bg-blue-200 text-blue-800 font-bold py-4 px-6 rounded-lg shadow-sm" data-answer="4">4</button>
+                    <button class="answer-btn bg-blue-100 hover:bg-blue-200 text-blue-800 font-bold py-4 px-6 rounded-lg shadow-sm" data-answer="6">6</button>
+                    <button class="answer-btn bg-blue-100 hover:bg-blue-200 text-blue-800 font-bold py-4 px-6 rounded-lg shadow-sm" data-answer="2">2</button>
+                </div>
+            </div>
+            
+            <!-- Progress Indicator -->
+            <div class="w-full md:w-48 bg-white rounded-xl shadow-lg p-6 flex flex-col items-center">
+                <div class="progress-face mb-4">
+                    <img src="https://img.freepik.com/premium-vector/cute-happy-smiling-child-boy-cartoon-character-icon-illustration_138676-2050.jpg" alt="Happy Face" class="w-24 h-24" id="progress-face">
+                </div>
+                <div class="text-center">
+                    <div class="text-xl font-bold text-gray-800 mb-2">Score: <span id="score">0</span></div>
+                    <div class="w-full bg-gray-200 rounded-full h-4 mb-4">
+                        <div id="progress-bar" class="bg-green-500 h-4 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <div class="text-sm text-gray-600" id="progress-text">Let's begin!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="results-screen" class="w-full max-w-md text-center hidden">
+        <h1 class="text-4xl font-bold text-gray-800 mb-8">Great Job!</h1>
+        <img src="https://img.freepik.com/premium-vector/cute-little-boy-celebrate-victory-cartoon-vector-icon-illustration_138676-2201.jpg" alt="Celebration" class="w-48 h-48 mx-auto mb-8">
+        
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">You Completed the Challenge!</h2>
+            <div class="text-xl mb-6">Your score: <span id="final-score" class="font-bold text-green-600">8</span>/10</div>
+            <div class="text-lg mb-6" id="result-message">You're a math superstar!</div>
+            
+            <div class="flex justify-center space-x-4">
+                <button id="play-again" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full shadow-md transform hover:scale-105 transition duration-200">
+                    Play Again
+                </button>
+                <a href="/learning.html" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-md transform hover:scale-105 transition duration-200">
+                    Back to Learning
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio elements -->
+    <audio id="correct-sound" src="https://www.soundjay.com/buttons/sounds/button-09.mp3" preload="auto"></audio>
+    <audio id="wrong-sound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3" preload="auto"></audio>
+    <audio id="celebrate-sound" src="https://www.soundjay.com/human/sounds/applause-01.mp3" preload="auto"></audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+            
+            // Game state
+            let difficulty = '';
+            let currentRound = 0;
+            let score = 0;
+            let currentProblem = {};
+            const totalRounds = 10;
+            
+            // DOM elements
+            const difficultyScreen = document.getElementById('difficulty-screen');
+            const gameScreen = document.getElementById('game-screen');
+            const resultsScreen = document.getElementById('results-screen');
+            const mathProblemEl = document.getElementById('math-problem');
+            const roundCounterEl = document.getElementById('round-counter');
+            const scoreEl = document.getElementById('score');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const progressFace = document.getElementById('progress-face');
+            const finalScoreEl = document.getElementById('final-score');
+            const resultMessageEl = document.getElementById('result-message');
+            const correctSound = document.getElementById('correct-sound');
+            const wrongSound = document.getElementById('wrong-sound');
+            const celebrateSound = document.getElementById('celebrate-sound');
+            
+            // Difficulty buttons
+            document.querySelectorAll('[data-difficulty]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    difficulty = this.dataset.difficulty;
+                    startGame();
+                });
+            });
+            
+            // Answer buttons
+            document.querySelectorAll('.answer-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    checkAnswer(this.dataset.answer);
+                });
+            });
+            
+            // Play again button
+            document.getElementById('play-again').addEventListener('click', function() {
+                resultsScreen.classList.add('hidden');
+                difficultyScreen.classList.remove('hidden');
+            });
+            
+            function startGame() {
+                difficultyScreen.classList.add('hidden');
+                gameScreen.classList.remove('hidden');
+                currentRound = 0;
+                score = 0;
+                updateScore();
+                nextRound();
+            }
+            function nextRound() {
+                currentRound++;
+                
+                if (currentRound > totalRounds) {
+                    endGame();
+                    return;
+                }
+                
+                updateRoundCounter();
+                generateProblem();
+            }
+function generateProblem() {
+                let num1, num2;
+                
+                switch(difficulty) {
+                    case 'easy':
+                        num1 = Math.floor(Math.random() * 10) + 1;
+                        num2 = Math.floor(Math.random() * 10) + 1;
+                        break;
+                    case 'medium':
+                        num1 = Math.floor(Math.random() * 20) + 1;
+                        num2 = Math.floor(Math.random() * 20) + 1;
+                        break;
+                    case 'hard':
+                        num1 = Math.floor(Math.random() * 50) + 1;
+                        num2 = Math.floor(Math.random() * 50) + 1;
+                        break;
+                }
+                
+                const operator = ['+', '-'][Math.floor(Math.random() * 2)];
+                let correctAnswer;
+                
+                if (operator === '+') {
+                    correctAnswer = num1 + num2;
+                } else {
+                    // For subtraction, ensure answer is positive
+                    if (num1 < num2) [num1, num2] = [num2, num1];
+                    correctAnswer = num1 - num2;
+                }
+                
+                currentProblem = {
+                    num1,
+                    num2,
+                    operator,
+                    correctAnswer
+                };
+                
+                mathProblemEl.textContent = `${num1} ${operator} ${num2}`;
+                
+                // Generate answer options
+                const answers = [correctAnswer];
+                while (answers.length < 4) {
+                    let wrongAnswer;
+                    if (operator === '+') {
+                        wrongAnswer = correctAnswer + (Math.floor(Math.random() * 5) * (Math.random() < 0.5 ? -1 : 1));
+                    } else {
+                        wrongAnswer = correctAnswer + (Math.floor(Math.random() * 3) * (Math.random() < 0.5 ? -1 : 1));
+                    }
+                    
+                    // Ensure wrong answer is positive and different from correct answer
+                    wrongAnswer = Math.max(1, wrongAnswer);
+                    if (!answers.includes(wrongAnswer)) {
+                        answers.push(wrongAnswer);
+                    }
+                }
+                
+                // Shuffle answers
+                answers.sort(() => Math.random() - 0.5);
+                
+                // Update answer buttons
+                const answerButtons = document.querySelectorAll('.answer-btn');
+                answerButtons.forEach((btn, i) => {
+                    btn.textContent = answers[i];
+                    btn.dataset.answer = answers[i];
+                    btn.classList.remove('correct', 'wrong');
+                });
+            }
+            
+            function checkAnswer(selectedAnswer) {
+                const answerButtons = document.querySelectorAll('.answer-btn');
+                const correctBtn = Array.from(answerButtons).find(btn => btn.dataset.answer == currentProblem.correctAnswer);
+                
+                answerButtons.forEach(btn => {
+                    btn.disabled = true;
+                    if (btn.dataset.answer == currentProblem.correctAnswer) {
+                        btn.classList.add('correct');
+                    } else if (btn.dataset.answer == selectedAnswer) {
+                        btn.classList.add('wrong');
+                    }
+                });
+                if (selectedAnswer == currentProblem.correctAnswer) {
+                    score++;
+                    correctSound.play();
+                    updateScore();
+                    setTimeout(() => {
+                        answerButtons.forEach(btn => {
+                            btn.disabled = false;
+                            btn.classList.remove('correct', 'wrong');
+                        });
+                        nextRound();
+                    }, 1500);
+                } else {
+                    wrongSound.play();
+                    setTimeout(() => {
+                        answerButtons.forEach(btn => {
+                            btn.disabled = false;
+                            btn.classList.remove('correct', 'wrong');
+                        });
+                        // Show same problem again instead of moving to next round
+                        generateProblem(); // Regenerate the same type of problem
+                    }, 1500);
+                }
+}
+            
+            function updateRoundCounter() {
+                roundCounterEl.textContent = `Round ${currentRound} of ${totalRounds}`;
+            }
+            
+            function updateScore() {
+                scoreEl.textContent = score;
+                const progressPercent = (currentRound / totalRounds) * 100;
+                progressBar.style.width = `${progressPercent}%`;
+                
+                // Update progress text and face based on performance
+                const accuracy = score / currentRound;
+                
+                if (accuracy >= 0.8) {
+                    progressText.textContent = "Awesome!";
+                    progressFace.src = "https://img.freepik.com/premium-vector/cute-happy-smiling-child-boy-cartoon-character-icon-illustration_138676-2050.jpg";
+                } else if (accuracy >= 0.5) {
+                    progressText.textContent = "Good job!";
+                    progressFace.src = "https://img.freepik.com/premium-vector/cute-smiling-child-boy-cartoon-character-icon-illustration_138676-2130.jpg";
+                } else {
+                    progressText.textContent = "Keep trying!";
+                    progressFace.src = "https://img.freepik.com/premium-vector/cute-sad-child-boy-cartoon-character-icon-illustration_138676-2131.jpg";
+                }
+            }
+            
+            function endGame() {
+                gameScreen.classList.add('hidden');
+                resultsScreen.classList.remove('hidden');
+                
+                finalScoreEl.textContent = `${score}/${totalRounds}`;
+                celebrateSound.play();
+                
+                // Set result message based on score
+                if (score >= 9) {
+                    resultMessageEl.textContent = "Perfect! You're a math genius!";
+                } else if (score >= 7) {
+                    resultMessageEl.textContent = "Excellent work! You're really good at this!";
+                } else if (score >= 5) {
+                    resultMessageEl.textContent = "Good job! You're getting better!";
+                } else {
+                    resultMessageEl.textContent = "Nice try! Practice makes perfect!";
+                }
+            }
+        });
+    </script>
+</body>
+</html>

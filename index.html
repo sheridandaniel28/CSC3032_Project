@@ -1,17 +1,182 @@
-<DOCTYPE html>
-<html lang = "en">;
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta charset = "UTF-8">
-	<meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
-	<title> TinyLearners Buddy - Welcome! </title>
-	<link rel = "icon" type = "image/x-icon" href = "/static/favicon.ico">
-	<script src = "https://cdn.tailwindcss.com"> </script>
-	<script src = "https://unpkg.com/feather-icons"> </script>
-	<script src = "https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"> </script>
-	
-	<style>
-		@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
-		body {
-			font-family: 'Comic Neue', cursive;
-			background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-		}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TinyLearners Buddy - Welcome!</title>
+<link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/feather-icons"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+<style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap')
+	;
+
+body {
+	font-family: 'Comic Neue', cursive;
+	/* Background image */
+	background-image:
+		url("https://img.freepik.com/premium-photo/gradient-abstract-background-smooth-soft-warm-bright-multicolor-gradient-app-web-design-web-pages-banners-greeting-cards-vector-illustration-design_744423-24817.jpg?semt=ais_hybrid&w=740&q=80");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover; /* scale to cover screen */
+	background-attachment: fixed; /* optional: parallax-like effect */;
+}
+
+.bounce {
+	animation: bounce 2s infinite;
+}
+
+.speech-bubble {
+	position: relative;
+	background: white;
+	border-radius: 1.5rem;
+	padding: 1.5rem;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-top-color: white;
+	border-bottom: 0;
+	margin-left: -20px;
+	margin-bottom: -20px;
+}
+</style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+	<div class="absolute top-4 right-4">
+		<a href="login.html"
+			class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-4 rounded-full shadow-md transform hover:scale-105 transition duration-200 flex items-center">
+			<i data-feather="log-in" class="w-5 h-5 mr-2"></i> <span
+			class="text-sm">Login</span>
+		</a>
+	</div>
+	<div id="app" class="w-full max-w-3xl text-center">
+		<!-- Login button -->
+
+		<!-- Mascot Character -->
+		<div class="relative mb-8">
+			<img
+				src="https://img.freepik.com/premium-vector/cute-friendly-boy-greeting-cartoon-character-vector-icon-illustration_1263357-23218.jpg?w=360"
+				alt="Friendly Cartoon Kid"
+				class="w-48 h-48 mx-auto rounded-full object-cover border-8 border-yellow-200 shadow-lg">
+		</div>
+
+		<!-- Speech Bubble -->
+		<div class="speech-bubble mb-12 mx-auto max-w-md">
+			<p class="text-2xl font-bold text-gray-800">Hi there! Ready to
+				learn and play?</p>
+			<button id="voiceBtn"
+				class="mt-4 p-2 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition">
+				<i data-feather="volume-2"></i>
+			</button>
+		</div>
+
+		<!-- Action Buttons -->
+		<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+			<a href="learning.html"
+				class="bg-green-500 hover:bg-green-600 text-white text-xl font-bold py-6 px-4 rounded-xl shadow-lg transform hover:scale-105 transition duration-300 flex flex-col items-center">
+				<i data-feather="play" class="w-8 h-8 mb-2"></i> Start
+			</a> <a href="settings.html"
+				class="bg-purple-500 hover:bg-purple-600 text-white text-xl font-bold py-6 px-4 rounded-xl shadow-lg transform hover:scale-105 transition duration-300 flex flex-col items-center">
+				<i data-feather="settings" class="w-8 h-8 mb-2"></i> Settings
+			</a> <a href="help.html"
+				class="bg-blue-500 hover:bg-blue-600 text-white text-xl font-bold py-6 px-4 rounded-xl shadow-lg transform hover:scale-105 transition duration-300 flex flex-col items-center">
+				<i data-feather="help-circle" class="w-8 h-8 mb-2"></i> Help
+			</a>
+		</div>
+
+		<!-- Clouds decoration -->
+		<div class="absolute top-10 left-10 opacity-50">
+			<i data-feather="cloud" class="w-16 h-16 text-gray-200"></i>
+		</div>
+		<div class="absolute top-20 right-20 opacity-70">
+			<i data-feather="cloud" class="w-24 h-24 text-gray-200"></i>
+		</div>
+		<div class="absolute bottom-10 left-20 opacity-60">
+			<i data-feather="cloud" class="w-20 h-20 text-gray-200"></i>
+		</div>
+	</div>
+
+	<!-- Audio for voice-over -->
+	<audio id="welcomeVoice"
+		src="audio/hi_there.mp3"></audio>
+
+	<!-- Audio for background music -->
+	<audio id="bgMusic" src="audio/game_music.mp3" loop preload="auto">
+	</audio>
+
+	<!-- Background music toggle -->
+	<button id="musicToggle"
+		class="mt-4 p-2 rounded-full bg-pink-100 text-pink-600 hover:bg-pink-200 transition flex items-center gap-2"
+		aria-pressed="false" aria-label="Background music">
+		<i data-feather="music"></i> <span>Music: Off</span>
+	</button>
+
+
+	<script>
+	document.addEventListener('DOMContentLoaded', function () {
+    feather.replace();
+
+    // --- Voice-over (existing) ---
+    const welcomeVoice = document.getElementById('welcomeVoice');
+    welcomeVoice.play().catch(e => console.log("Auto-play prevented for voice"));
+
+    document.getElementById('voiceBtn').addEventListener('click', function () {
+      welcomeVoice.currentTime = 0;
+      welcomeVoice.play();
+    });
+
+    // --- Background music (new) ---
+    const bgMusic = document.getElementById('bgMusic');
+    const musicToggle = document.getElementById('musicToggle');
+    const musicLabel = musicToggle?.querySelector('span');
+
+    // Start with low volume for comfort
+    bgMusic.volume = 0.5;
+
+    // Browsers block autoplay with sound. Start on first user interaction:
+    const startMusicOnFirstGesture = () => {
+      bgMusic.play().then(() => {
+        if (musicLabel) musicLabel.textContent = 'Music: On';
+        musicToggle?.setAttribute('aria-pressed', 'true');
+      }).catch(err => {
+        console.log('Music autoplay blocked:', err);
+      });
+      // Remove listeners after first play attempt
+      document.removeEventListener('click', startMusicOnFirstGesture);
+      document.removeEventListener('keydown', startMusicOnFirstGesture);
+      document.removeEventListener('touchstart', startMusicOnFirstGesture);
+    };
+    document.addEventListener('click', startMusicOnFirstGesture, { once: true });
+    document.addEventListener('keydown', startMusicOnFirstGesture, { once: true });
+    document.addEventListener('touchstart', startMusicOnFirstGesture, { once: true });
+
+    // Toggle button: mute/unmute
+    if (musicToggle) {
+      musicToggle.addEventListener('click', () => {
+        if (bgMusic.paused) {
+          bgMusic.play().catch(() => {/* ignore */});
+          musicLabel.textContent = 'Music: On';
+          musicToggle.setAttribute('aria-pressed', 'true');
+        } else {
+          bgMusic.pause();
+          musicLabel.textContent = 'Music: Off';
+          musicToggle.setAttribute('aria-pressed', 'false');
+        }
+      });
+    }
+  });
+</script>
+
+</body>
+</html>

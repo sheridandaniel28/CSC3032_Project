@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TinyLearners Buddy - Help Center</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+        body {
+            font-family: 'Comic Neue', cursive;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .faq-item {
+            transition: all 0.3s ease;
+        }
+        .faq-item:hover {
+            transform: translateY(-3px);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-answer.open {
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4">
+    <div class="absolute top-4 right-4">
+        <a href="index.html" class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-4 rounded-full shadow-md transform hover:scale-105 transition duration-200 flex items-center">
+            <i data-feather="home" class="w-4 h-4 mr-2"></i>
+            Home
+        </a>
+    </div>
+
+    <div class="w-full max-w-3xl">
+        <!-- Header with mascot -->
+        <div class="flex flex-col md:flex-row items-center justify-center mb-8">
+            <img src="http://static.photos/people/200x200/123" alt="Helpful Mascot" class="w-32 h-32 rounded-full border-4 border-yellow-200 shadow-lg mb-4 md:mb-0 md:mr-6">
+            <div class="text-center md:text-left">
+                <h1 class="text-4xl font-bold text-gray-800">Need Help?</h1>
+                <p class="text-xl text-gray-600">We're here to make learning fun and easy!</p>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <i data-feather="help-circle" class="w-6 h-6 mr-2"></i>
+                Frequently Asked Questions
+            </h2>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item bg-blue-50 rounded-lg p-4">
+                    <div class="flex justify-between items-center cursor-pointer" onclick="toggleFAQ(this)">
+                        <h3 class="text-lg font-bold text-gray-800">How do I change my child's profile?</h3>
+                        <i data-feather="chevron-down" class="w-5 h-5 transition-transform"></i>
+                    </div>
+                    <div class="faq-answer mt-2 pl-2">
+                        <p class="text-gray-600">
+                            You can update your child's profile by going to Settings > Account. 
+                            There you can change their name, age, and learning preferences.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item bg-blue-50 rounded-lg p-4">
+                    <div class="flex justify-between items-center cursor-pointer" onclick="toggleFAQ(this)">
+                        <h3 class="text-lg font-bold text-gray-800">Why aren't the sounds working?</h3>
+                        <i data-feather="chevron-down" class="w-5 h-5 transition-transform"></i>
+                    </div>
+                    <div class="faq-answer mt-2 pl-2">
+                        <p class="text-gray-600">
+                            First, check your device's volume settings. Then go to Settings > Sound Settings 
+                            to make sure sound effects are turned on. If it still doesn't work, try refreshing the page.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item bg-blue-50 rounded-lg p-4">
+                    <div class="flex justify-between items-center cursor-pointer" onclick="toggleFAQ(this)">
+                        <h3 class="text-lg font-bold text-gray-800">How do I reset my progress?</h3>
+                        <i data-feather="chevron-down" class="w-5 h-5 transition-transform"></i>
+                    </div>
+                    <div class="faq-answer mt-2 pl-2">
+                        <p class="text-gray-600">
+                            To reset progress, go to Settings and scroll to the bottom. 
+                            You'll find a "Reset Progress" button. Note: This cannot be undone!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item bg-blue-50 rounded-lg p-4">
+                    <div class="flex justify-between items-center cursor-pointer" onclick="toggleFAQ(this)">
+                        <h3 class="text-lg font-bold text-gray-800">Can I use this on multiple devices?</h3>
+                        <i data-feather="chevron-down" class="w-5 h-5 transition-transform"></i>
+                    </div>
+                    <div class="faq-answer mt-2 pl-2">
+                        <p class="text-gray-600">
+                            Yes! Just log in with the same account on any device to access your child's profile 
+                            and continue their learning journey.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-item bg-blue-50 rounded-lg p-4">
+                    <div class="flex justify-between items-center cursor-pointer" onclick="toggleFAQ(this)">
+                        <h3 class="text-lg font-bold text-gray-800">How do I report a problem?</h3>
+                        <i data-feather="chevron-down" class="w-5 h-5 transition-transform"></i>
+                    </div>
+                    <div class="faq-answer mt-2 pl-2">
+                        <p class="text-gray-600">
+                            You can email us at help@tinylearners.com or use the "Contact Us" form below. 
+                            We'd love to hear from you!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <i data-feather="mail" class="w-6 h-6 mr-2"></i>
+                Contact Us
+            </h2>
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 mb-2">Your Email</label>
+                    <input type="email" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="parent@example.com" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Question or Issue</label>
+                    <textarea class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400" rows="4" placeholder="Describe your question or issue..."></textarea>
+                </div>
+                <button type="submit" class="w-full bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-3 px-4 rounded-lg shadow-md transform hover:scale-105 transition duration-200">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+            
+            // Initialize all FAQ answers as closed
+            document.querySelectorAll('.faq-answer').forEach(answer => {
+                answer.classList.remove('open');
+            });
+        });
+
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('i');
+            
+            answer.classList.toggle('open');
+            icon.style.transform = answer.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0)';
+        }
+    </script>
+</body>
+</html>

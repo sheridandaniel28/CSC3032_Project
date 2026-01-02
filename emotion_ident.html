@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TinyLearners Buddy - Emotion Match</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-image: url("https://img.freepik.com/premium-photo/gradient-abstract-background-smooth-soft-warm-bright-multicolor-gradient-app-web-design-web-pages-banners-greeting-cards-vector-illustration-design_744423-24817.jpg?semt=ais_hybrid&w=740&q=80");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        .emotion-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .emotion-card:hover {
+            transform: scale(1.05);
+        }
+        .emotion-card.correct {
+            animation: correctGuess 0.5s;
+            border: 4px solid #10B981;
+        }
+        .emotion-card.wrong {
+            animation: wrongGuess 0.5s;
+            border: 4px solid #EF4444;
+        }
+        @keyframes correctGuess {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @keyframes wrongGuess {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+        .speech-bubble {
+            position: relative;
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4">
+    <div class="absolute top-4 right-4">
+        <a href="learning.html" class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-4 rounded-full shadow-md transform hover:scale-105 transition duration-200 flex items-center">
+            <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>
+            Back
+        </a>
+    </div>
+
+    <div class="w-full max-w-4xl text-center mt-8">
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">Emotion Match</h1>
+        
+        <div class="speech-bubble mb-8 mx-auto max-w-md">
+            <p id="prompt" class="text-2xl font-bold text-gray-800">Find the happy face!</p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+            <div class="emotion-card bg-white p-4 rounded-xl shadow-lg">
+                <img id="card1-img" src="" alt="Emotion" class="w-full h-auto">
+                <audio id="card1-audio" src="" preload="auto"></audio>
+            </div>
+            
+            <div class="emotion-card bg-white p-4 rounded-xl shadow-lg">
+                <img id="card2-img" src="" alt="Emotion" class="w-full h-auto">
+                <audio id="card2-audio" src="" preload="auto"></audio>
+            </div>
+            
+            <div class="emotion-card bg-white p-4 rounded-xl shadow-lg">
+                <img id="card3-img" src="" alt="Emotion" class="w-full h-auto">
+                <audio id="card3-audio" src="" preload="auto"></audio>
+            </div>
+            
+            <div class="emotion-card bg-white p-4 rounded-xl shadow-lg">
+                <img id="card4-img" src="" alt="Emotion" class="w-full h-auto">
+                <audio id="card4-audio" src="" preload="auto"></audio>
+            </div>
+</div>
+        
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <div class="flex justify-center items-center space-x-4">
+                <div class="text-center">
+                    <p class="text-lg font-bold text-gray-700">Score</p>
+                    <p id="score" class="text-3xl font-bold text-green-500">0</p>
+                </div>
+                <button id="nextRound" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-md transform hover:scale-105 transition duration-200">
+                    Next Round
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio elements -->
+    <audio id="correctSound" src="audio/yay.m4a" preload="auto"></audio>
+    <audio id="wrongSound" src="audio/wrong.mp3" preload="auto"></audio>
+    <audio id="cheerSound" src="https://www.soundjay.com/human/sounds/applause-01.mp3" preload="auto"></audio>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    feather.replace();
+
+    const emotions = [
+        { name: 'happy', img: 'images/happy.jpg', audio: 'https://www.soundjay.com/human/sounds/laugh-01.mp3' },
+        { name: 'sad', img: 'images/sad.jpg', audio: 'https://www.soundjay.com/human/sounds/sad-01.mp3' },
+        { name: 'angry', img: 'images/angry.jpg', audio: 'https://www.soundjay.com/human/sounds/angry-01.mp3' },
+        { name: 'surprised', img: 'images/surprised.jpg', audio: 'https://www.soundjay.com/human/sounds/surprise-01.mp3' }
+    ];
+
+    const prompts = {
+        happy: 'Find the happy face!',
+        sad: 'Which one looks sad?',
+        angry: 'Where is the angry face?',
+        surprised: 'Can you find the surprised face?'
+    };
+
+    let currentEmotion = '';
+    let score = 0;
+
+    const scoreElement = document.getElementById('score');
+    const promptElement = document.getElementById('prompt');
+    const correctSound = document.getElementById('correctSound');
+    const wrongSound = document.getElementById('wrongSound');
+    const cheerSound = document.getElementById('cheerSound');
+    const cards = document.querySelectorAll('.emotion-card');
+
+    function startNewRound() {
+        cards.forEach(card => card.classList.remove('correct', 'wrong'));
+
+        const randomIndex = Math.floor(Math.random() * emotions.length);
+        currentEmotion = emotions[randomIndex].name;
+        promptElement.textContent = prompts[currentEmotion];
+
+        const shuffledEmotions = [...emotions].sort(() => Math.random() - 0.5);
+
+        cards.forEach((card, index) => {
+            const emotion = shuffledEmotions[index];
+            card.querySelector('img').src = emotion.img;
+            card.querySelector('img').alt = emotion.name;
+            card.querySelector('audio').src = emotion.audio;
+            card.dataset.emotion = emotion.name;
+        });
+    }
+
+    cards.forEach(card => {
+        card.addEventListener('click', function () {
+            if (this.classList.contains('correct') || this.classList.contains('wrong')) return;
+
+            const emotion = this.dataset.emotion;
+            const audio = this.querySelector('audio');
+
+            if (emotion === currentEmotion) {
+                this.classList.add('correct');
+                score++;
+                scoreElement.textContent = score;
+                correctSound.play();
+                audio.play();
+
+                if (score % 10 === 0) cheerSound.play();
+            } else {
+                this.classList.add('wrong');
+                wrongSound.volume = 0.2
+                wrongSound.play();
+            }
+        });
+    });
+
+    document.getElementById('nextRound').addEventListener('click', startNewRound);
+
+    // Start game
+    startNewRound();
+    });
+    </script>
+</body>
+</html>
