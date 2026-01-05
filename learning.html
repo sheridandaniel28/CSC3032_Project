@@ -1,142 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TinyLearners Buddy - Let's Learn!</title>
-<link rel="icon" type="image/x-icon" href="/static/favicon.ico">
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/feather-icons"></script>
-<style>
-@import
-	url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartEmotions - Let's Learn!</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
 
-body {
-	font-family: 'Comic Neue', cursive;
-	/* Background image */
-	background-image:
-		url("https://img.freepik.com/premium-photo/gradient-abstract-background-smooth-soft-warm-bright-multicolor-gradient-app-web-design-web-pages-banners-greeting-cards-vector-illustration-design_744423-24817.jpg?semt=ais_hybrid&w=740&q=80");
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-size: cover; /* scale to cover screen */
-	background-attachment: fixed; /* optional: parallax-like effect */;
-}
+      body {
+        font-family: 'Comic Neue', cursive;
+        /* Background image */
+        background-image:
+          url("https://img.freepik.com/premium-photo/gradient-abstract-background-smooth-soft-warm-bright-multicolor-gradient-app-web-design-web-pages-banners-greeting-cards-vector-illustration-design_744423-24817.jpg?semt=ais_hybrid&w=740&q=80");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        /* scale to cover screen */
+        background-attachment: fixed;
+        /* optional: parallax-like effect */
+        ;
+      }
 
-.learning-card {
-	transition: all 0.3s ease;
-	perspective: 1000px;
-}
+      .learning-card {
+        transition: all 0.3s ease;
+        perspective: 1000px;
+      }
 
-.learning-card:hover {
-	transform: translateY(-5px);
-}
+      .learning-card:hover {
+        transform: translateY(-5px);
+      }
 
-.card-inner {
-	transition: transform 0.6s;
-	transform-style: preserve-3d;
-}
+      .card-inner {
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+      }
 
-.card-inner.flipped {
-	transform: rotateY(180deg);
-}
+      .card-inner.flipped {
+        transform: rotateY(180deg);
+      }
 
-.card-front, .card-back {
-	backface-visibility: hidden;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-}
+      .card-front,
+      .card-back {
+        backface-visibility: hidden;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
 
-.card-back {
-	transform: rotateY(180deg);
-}
-</style>
-</head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4">
-	<div class="absolute top-4 right-4">
-		<a href="index.html"
-			class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-4 rounded-full shadow-md transform hover:scale-105 transition duration-200 flex items-center">
-			<i data-feather="home" class="w-4 h-4 mr-2"></i> Home
-		</a>
-	</div>
-
-	<div class="w-full max-w-4xl text-center">
-		<h1 class="text-4xl font-bold text-gray-800 mb-8">Let's Learn
-			Something New!</h1>
-
-		<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-
-			<a href="emotion_ident.html" class="learning-card h-48">
-				<div class="card-inner relative w-full h-full">
-					<div
-						class="card-front bg-white rounded-xl shadow-lg p-4 flex flex-col items-center justify-center">
-						<img
-							src="https://img.freepik.com/premium-vector/happy-angry-sad-three-emoji-faces-colorful-emotion-icons-vector-illustration_797523-4193.jpg"
-							alt="Emotions" class="w-24 h-24 mb-4">
-						<h3 class="text-xl font-bold">Pick the Emotion</h3>
-					</div>
-					<div
-						class="card-back bg-blue-100 rounded-xl shadow-lg p-4 flex items-center justify-center">
-						<p class="text-lg font-bold">Learn to identify different
-							emotions!</p>
-					</div>
-				</div>
-
-			</a> <a href="emotion_math.html" class="learning-card h-48">
-				<div class="card-inner relative w-full h-full">
-					<div
-						class="card-front bg-white rounded-xl shadow-lg p-4 flex flex-col items-center justify-center">
-						<img
-							src="https://cdn.vectorstock.com/i/500p/32/72/teacher-emoticon-vector-56723272.jpg"
-							alt="Emotion Math" class="w-24 h-24 mb-4">
-						<h3 class="text-xl font-bold">Emotion Math</h3>
-					</div>
-					<div
-						class="card-back bg-green-100 rounded-xl shadow-lg p-4 flex items-center justify-center">
-						<p class="text-lg font-bold">Learn math with fun emotions!</p>
-					</div>
-				</div>
-			</a> <a href="colours.html" class="learning-card h-48">
-				<div class="card-inner relative w-full h-full">
-					<div
-						class="card-front bg-white rounded-xl shadow-lg p-4 flex flex-col items-center justify-center">
-						<img
-							src="https://i.pinimg.com/736x/f1/0e/c1/f10ec1aeacdb2e7410c68a10b6207012.jpg"
-							alt="Colors" class="w-24 h-24 mb-4">
-						<h3 class="text-xl font-bold">Colours</h3>
-					</div>
-					<div
-						class="card-back bg-yellow-100 rounded-xl shadow-lg p-4 flex items-center justify-center">
-						<p class="text-lg font-bold">Learn all the colours of the
-							rainbow!</p>
-					</div>
-				</div>
-			</a>
-		</div>
-	</div>
-
-	<div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-		<h2 class="text-2xl font-bold mb-4">Daily Challenge</h2>
-		<div class="flex flex-col items-center">
-			<img src="http://static.photos/education/320x240/4" alt="Challenge"
-				class="w-32 h-32 mb-4">
-			<p class="text-lg mb-4">Can you find 3 things that are red?</p>
-			<button
-				class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-full shadow-md transform hover:scale-105 transition duration-200">
-				Take Challenge</button>
-		</div>
-	</div>
-	</div>
-
-	<script>
-        function flipCard(card) {
-            const inner = card.querySelector('.card-inner');
-            inner.classList.toggle('flipped');
-        }
+      .card-back {
+        transform: rotateY(180deg);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="absolute top-4 right-4">
+      <a href="index.html" class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-4 rounded-full shadow-md transform hover:scale-105 transition duration-200 flex items-center">
+        <i data-feather="home" class="w-4 h-4 mr-2"></i> Home </a>
+    </div>
+    <div class="w-full max-w-4xl text-center">
+      <h1 class="text-4xl font-bold text-gray-800 mb-8">Let's Learn Something New!</h1>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      
+        <a href="emotion_ident.html" class="learning-card h-48">
+          <div class="card-inner relative w-full h-full">
+            <div class="card-front bg-white rounded-xl shadow-lg p-4 flex flex-col items-center justify-center">
+              <img src="https://img.freepik.com/premium-vector/happy-angry-sad-three-emoji-faces-colorful-emotion-icons-vector-illustration_797523-4193.jpg" alt="Emotions" class="w-24 h-24 mb-4">
+              <h3 class="text-xl font-bold">Pick the Emotion</h3>
+            </div>
+            <div class="card-back bg-blue-100 rounded-xl shadow-lg p-4 flex items-center justify-center">
+              <p class="text-lg font-bold">Learn to identify different emotions!</p>
+            </div>
+          </div>
+        </a>
         
-        document.addEventListener('DOMContentLoaded', function() {
-            feather.replace();
-        });
+        <a href="emotion_math.html" class="learning-card h-48">
+          <div class="card-inner relative w-full h-full">
+            <div class="card-front bg-white rounded-xl shadow-lg p-4 flex flex-col items-center justify-center">
+              <img src="https://cdn.vectorstock.com/i/500p/32/72/teacher-emoticon-vector-56723272.jpg" alt="Emotion Math" class="w-24 h-24 mb-4">
+              <h3 class="text-xl font-bold">Emotion Math</h3>
+            </div>
+            <div class="card-back bg-green-100 rounded-xl shadow-lg p-4 flex items-center justify-center">
+              <p class="text-lg font-bold">Learn math with fun emotions!</p>
+            </div>
+          </div>
+        </a>
+        
+        <a href="colours.html" class="learning-card h-48">
+          <div class="card-inner relative w-full h-full">
+            <div class="card-front bg-white rounded-xl shadow-lg p-4 flex flex-col items-center justify-center">
+              <img src="https://i.pinimg.com/736x/f1/0e/c1/f10ec1aeacdb2e7410c68a10b6207012.jpg" alt="Colors" class="w-24 h-24 mb-4">
+              <h3 class="text-xl font-bold">Colours</h3>
+            </div>
+            <div class="card-back bg-yellow-100 rounded-xl shadow-lg p-4 flex items-center justify-center">
+              <p class="text-lg font-bold">Learn all the colours of the rainbow!</p>
+            </div>
+          </div>
+        </a>
+        
+      </div>
+    </div>
+    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+      <h2 class="text-2xl font-bold mb-4">Daily Challenge</h2>
+      <div class="flex flex-col items-center">
+        <img src="http://static.photos/education/320x240/4" alt="Challenge" class="w-32 h-32 mb-4">
+        <p class="text-lg mb-4">Can you find 3 things that are red?</p>
+        <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-full shadow-md transform hover:scale-105 transition duration-200"> Take Challenge</button>
+      </div>
+    </div>
+    </div>
+    <script>
+      function flipCard(card) {
+        const inner = card.querySelector('.card-inner');
+        inner.classList.toggle('flipped');
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        feather.replace();
+      });
     </script>
-</body>
+  </body>
 </html>

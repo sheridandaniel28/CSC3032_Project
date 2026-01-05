@@ -41,9 +41,9 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-4">
+<body class="min-h-screen flex items-center justify-center p-4">
     <div class="absolute top-4 right-4">
-        <a href="/learning.html" class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-4 rounded-full shadow-md transform hover:scale-105 transition duration-200 flex items-center">
+        <a href="learning.html" class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-4 rounded-full shadow-md transform hover:scale-105 transition duration-200 flex items-center">
             <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>
             Back
         </a>
@@ -70,8 +70,8 @@
         </div>
     </div>
 
-    <div id="game-screen" class="w-full max-w-3xl hidden">
-        <div class="flex flex-col md:flex-row">
+    <div id="game-screen" class="w-full max-w-3xl hidden mx-auto">
+        <div class="flex flex-col md:flex-row justify center">
             <!-- Game Area -->
             <div class="flex-1 bg-white rounded-xl shadow-lg p-6 mb-6 md:mb-0 md:mr-6">
                 <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Math Challenge</h1>
@@ -118,7 +118,7 @@
                 <button id="play-again" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full shadow-md transform hover:scale-105 transition duration-200">
                     Play Again
                 </button>
-                <a href="/learning.html" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-md transform hover:scale-105 transition duration-200">
+                <a href="learning.html" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-md transform hover:scale-105 transition duration-200">
                     Back to Learning
                 </a>
             </div>
@@ -314,13 +314,13 @@ function generateProblem() {
                 
                 if (accuracy >= 0.8) {
                     progressText.textContent = "Awesome!";
-                    progressFace.src = "https://img.freepik.com/premium-vector/cute-happy-smiling-child-boy-cartoon-character-icon-illustration_138676-2050.jpg";
+                    progressFace.src = "images/happy.jpg";
                 } else if (accuracy >= 0.5) {
                     progressText.textContent = "Good job!";
-                    progressFace.src = "https://img.freepik.com/premium-vector/cute-smiling-child-boy-cartoon-character-icon-illustration_138676-2130.jpg";
+                    progressFace.src = "images/surprised.jpg";
                 } else {
                     progressText.textContent = "Keep trying!";
-                    progressFace.src = "https://img.freepik.com/premium-vector/cute-sad-child-boy-cartoon-character-icon-illustration_138676-2131.jpg";
+                    progressFace.src = "images/sad.jpg";
                 }
             }
             
@@ -328,7 +328,7 @@ function generateProblem() {
                 gameScreen.classList.add('hidden');
                 resultsScreen.classList.remove('hidden');
                 
-                finalScoreEl.textContent = `${score}/${totalRounds}`;
+                finalScoreEl.textContent = `${score}`;
                 celebrateSound.play();
                 
                 // Set result message based on score
