@@ -12,16 +12,6 @@
 
       body {
         font-family: 'Comic Neue', cursive;
-        /* Background image */
-        background-image:
-          url("https://img.freepik.com/premium-photo/gradient-abstract-background-smooth-soft-warm-bright-multicolor-gradient-app-web-design-web-pages-banners-greeting-cards-vector-illustration-design_744423-24817.jpg?semt=ais_hybrid&w=740&q=80");
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-        /* scale to cover screen */
-        background-attachment: fixed;
-        /* optional: parallax-like effect */
-        ;
       }
 
       .learning-card {
@@ -56,10 +46,6 @@
     </style>
   </head>
   <body class="min-h-screen flex flex-col items-center justify-center p-4">
-    <div class="absolute top-4 right-4">
-      <a href="index.html" class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-4 rounded-full shadow-md transform hover:scale-105 transition duration-200 flex items-center">
-        <i data-feather="home" class="w-4 h-4 mr-2"></i> Home </a>
-    </div>
     <div class="w-full max-w-4xl text-center">
       <h1 class="text-4xl font-bold text-gray-800 mb-8">Let's Learn Something New!</h1>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -88,14 +74,14 @@
           </div>
         </a>
         
-        <a href="colours.html" class="learning-card h-48">
+        <a href="counting.html" class="learning-card h-48">
           <div class="card-inner relative w-full h-full">
             <div class="card-front bg-white rounded-xl shadow-lg p-4 flex flex-col items-center justify-center">
-              <img src="https://i.pinimg.com/736x/f1/0e/c1/f10ec1aeacdb2e7410c68a10b6207012.jpg" alt="Colors" class="w-24 h-24 mb-4">
-              <h3 class="text-xl font-bold">Colours</h3>
+              <img src="https://i.pinimg.com/736x/f1/0e/c1/f10ec1aeacdb2e7410c68a10b6207012.jpg" alt="Counting" class="w-24 h-24 mb-4">
+              <h3 class="text-xl font-bold">Counting</h3>
             </div>
             <div class="card-back bg-yellow-100 rounded-xl shadow-lg p-4 flex items-center justify-center">
-              <p class="text-lg font-bold">Learn all the colours of the rainbow!</p>
+              <p class="text-lg font-bold">Learn counting the fun way!</p>
             </div>
           </div>
         </a>
@@ -111,6 +97,13 @@
       </div>
     </div>
     </div>
+    
+    <iframe
+  id="musicFrame"
+  src="music.html"
+  style="display:none;"
+></iframe>
+    
     <script>
       function flipCard(card) {
         const inner = card.querySelector('.card-inner');
