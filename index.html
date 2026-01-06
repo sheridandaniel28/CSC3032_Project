@@ -59,7 +59,6 @@
         <span class="text-sm">Login</span>
       </a>
     </div>
-    
     <div id="app" class="w-full max-w-3xl text-center">
       <!-- Login button -->
       <!-- Mascot Character -->
@@ -75,11 +74,11 @@
       </div>
       <!-- Action Buttons -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <a href="learning.html" class="bg-green-500 hover:bg-green-600 text-white text-xl font-bold py-6 px-4 rounded-xl shadow-lg transform hover:scale-105 transition duration-300 flex flex-col items-center">
+        <a href="learning.html" target="contentFrame" class="bg-green-500 hover:bg-green-600 text-white text-xl font-bold py-6 px-4 rounded-xl shadow-lg transform hover:scale-105 transition duration-300 flex flex-col items-center">
           <i data-feather="play" class="w-8 h-8 mb-2"></i> Start </a>
-        <a href="settings.html" class="bg-purple-500 hover:bg-purple-600 text-white text-xl font-bold py-6 px-4 rounded-xl shadow-lg transform hover:scale-105 transition duration-300 flex flex-col items-center">
+        <a href="settings.html" target="contentFrame" class="bg-purple-500 hover:bg-purple-600 text-white text-xl font-bold py-6 px-4 rounded-xl shadow-lg transform hover:scale-105 transition duration-300 flex flex-col items-center">
           <i data-feather="settings" class="w-8 h-8 mb-2"></i> Settings </a>
-        <a href="help.html" class="bg-blue-500 hover:bg-blue-600 text-white text-xl font-bold py-6 px-4 rounded-xl shadow-lg transform hover:scale-105 transition duration-300 flex flex-col items-center">
+        <a href="help.html" target="contentFrame" class="bg-blue-500 hover:bg-blue-600 text-white text-xl font-bold py-6 px-4 rounded-xl shadow-lg transform hover:scale-105 transition duration-300 flex flex-col items-center">
           <i data-feather="help-circle" class="w-8 h-8 mb-2"></i> Help </a>
       </div>
       <!-- Clouds decoration -->
@@ -97,11 +96,8 @@
     <audio id="welcomeVoice" src="audio/hi_there_revised.wav"></audio>
     <!-- Audio for background music -->
     <audio id="bgMusic" src="audio/game_music.mp3" loop preload="auto"></audio>
-    <!-- Background music toggle -->
-    <button id="musicToggle" class="mt-4 p-2 rounded-full bg-pink-100 text-pink-600 hover:bg-pink-200 transition flex items-center gap-2" aria-pressed="false" aria-label="Background music">
-      <i data-feather="music"></i>
-      <span>Music: Off</span>
-    </button>
+    <iframe id="musicFrame" src="music.html" style="display:none;"></iframe>
+    <iframe name="contentFrame" id="contentFrame" class="w-full max-w-10xl h-[800px] rounded-xl shadow-lg border-none"></iframe>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         feather.replace();
@@ -113,48 +109,45 @@
           welcomeVoice.play();
         });
         // --- Background music (new) ---
-        const bgMusic = document.getElementById('bgMusic');
-        const musicToggle = document.getElementById('musicToggle');
-        const musicLabel = musicToggle?.querySelector('span');
-        // Start with low volume for comfort
-        bgMusic.volume = 0.5;
-        // Browsers block autoplay with sound. Start on first user interaction:
-        const startMusicOnFirstGesture = () => {
-          bgMusic.play().then(() => {
-            if (musicLabel) musicLabel.textContent = 'Music: On';
-            musicToggle?.setAttribute('aria-pressed', 'true');
-          }).catch(err => {
-            console.log('Music autoplay blocked:', err);
-          });
-          // Remove listeners after first play attempt
-          document.removeEventListener('click', startMusicOnFirstGesture);
-          document.removeEventListener('keydown', startMusicOnFirstGesture);
-          document.removeEventListener('touchstart', startMusicOnFirstGesture);
-        };
-        document.addEventListener('click', startMusicOnFirstGesture, {
-          once: true
-        });
-        document.addEventListener('keydown', startMusicOnFirstGesture, {
-          once: true
-        });
-        document.addEventListener('touchstart', startMusicOnFirstGesture, {
-          once: true
-        });
-        // Toggle button: mute/unmute
-        if (musicToggle) {
-          musicToggle.addEventListener('click', () => {
-            if (bgMusic.paused) {
-              bgMusic.play().catch(() => {
-                /* ignore */ });
-              musicLabel.textContent = 'Music: On';
-              musicToggle.setAttribute('aria-pressed', 'true');
-            } else {
-              bgMusic.pause();
-              musicLabel.textContent = 'Music: Off';
-              musicToggle.setAttribute('aria-pressed', 'false');
-            }
-          });
+        const musicFrame = document.getElementById("musicFrame");
+        const musicToggle = document.getElementById("musicToggle");
+
+        function playMusic() {
+          if (!userAllowedMusic) return;
+          musicFrame.contentWindow.postMessage("play", "*");
         }
+
+        function pauseMusic() {
+          musicFrame.contentWindow.postMessage("pause", "*");
+        }
+        window.addEventListener("message", (e) => {
+          if (e.data === "music:on") playMusic();
+          if (e.data === "music:off") pauseMusic();
+          if (e.data === "music:status") {
+            const isPlaying = "audio/game_music.mp3";
+            document.getElementById("contentFrame");
+            docuemnt.contentWindow;
+            document.postMessage(isPlaying ? "music:on" : "music:off", "*");
+          }
+        });
+        // First user interaction → start music
+        let userAllowedMusic = false;
+        document.addEventListener("click", () => {
+          userAllowedMusic = true;
+        }, {
+          once: true
+        });
+        // Toggle button
+        musicToggle.addEventListener("click", () => {
+          const isOn = musicToggle.getAttribute("aria-pressed") === "true";
+          if (isOn) {
+            pauseMusic();
+            musicToggle.setAttribute("aria-pressed", "false");
+          } else {
+            playMusic();
+            musicToggle.setAttribute("aria-pressed", "true");
+          }
+        });
       });
     </script>
   </body>

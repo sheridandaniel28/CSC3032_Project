@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <audio id="bgMusic" src="audio/game_music.mp3" loop></audio>
+
+  <script>
+    const music = document.getElementById("bgMusic");
+    music.volume = 0.5;
+
+    // Autoplay after user interaction
+    window.addEventListener("message", (e) => {
+      if (e.data === "play") music.play().catch(() => {});
+      if (e.data === "pause") music.pause();
+    });
+  </script>
+</body>
+</html>
