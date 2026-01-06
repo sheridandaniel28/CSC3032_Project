@@ -11,8 +11,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
         body {
             font-family: 'Comic Neue', cursive;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        }
+           	}
         .toggle-checkbox:checked {
             right: 0;
             border-color: #68D391;
@@ -23,13 +22,6 @@
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4">
-    <div class="absolute top-4 right-4">
-        <a href="index.html" class="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold py-2 px-4 rounded-full shadow-md transform hover:scale-105 transition duration-200 flex items-center">
-            <i data-feather="home" class="w-4 h-4 mr-2"></i>
-            Home
-        </a>
-    </div>
-
     <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
         <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Settings</h1>
         
@@ -113,9 +105,18 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             feather.replace();
-            
+            const musicToggle = document.getElementById("music-toggle");
+
+            musicToggle.addEventListener("change", () => {
+              if (musicToggle.checked) {
+                window.parent.postMessage("music:on", "*");
+              } else {
+                window.parent.postMessage("music:off", "*");
+              }
+            });
+
             // Toggle switches functionality
-            const toggles = document.querySelectorAll('input[type="checkbox"]');
+            const toggles = document.querySelectorAll('input[type="checkbox"]:not(#music-toggle)');
             toggles.forEach(toggle => {
                 toggle.addEventListener('change', function() {
                     const label = document.querySelector(`label[for="${this.id}"]`);
